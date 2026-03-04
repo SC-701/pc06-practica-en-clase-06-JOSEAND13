@@ -23,20 +23,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Agregar([FromBody] VehiculoRequest vehiculo)
         {
-            try
-            {
-                var resultado = await _vehiculoFlujo.Agregar(vehiculo);
-
-                return Ok(new
-                {
-                    mensaje = "Vehículo agregado",
-                    id = resultado
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+            var resultado = await _vehiculoFlujo.Agregar(vehiculo);
+            return CreatedAtAction(nameof(Obtener),new {id = resultado}, null);
         }
 
         [HttpPut("{id}")]
